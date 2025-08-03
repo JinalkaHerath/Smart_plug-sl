@@ -4,127 +4,270 @@
   <meta charset="UTF-8" />
   <title>ESP32 Relay Control Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
   <style>
+    :root {
+      --primary-color: #2c7be5;
+      --primary-hover: #1a68d1;
+      --danger-color: #e63757;
+      --danger-hover: #d12545;
+      --gray-color: #95aac9;
+      --gray-hover: #6e84a3;
+      --success-color: #00d97e;
+      --card-bg: #ffffff;
+      --body-bg: #f5f7fa;
+      --text-color: #12263f;
+      --text-secondary: #6e84a3;
+      --border-radius: 12px;
+      --box-shadow: 0 0.375rem 1.5rem 0 rgba(140,152,164,.125);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       text-align: center;
-      background-color: #f9f9f9;
+      background-color: var(--body-bg);
       margin: 0;
       padding: 0 10px 40px;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
       justify-content: space-between;
+      color: var(--text-color);
     }
+
     h1 {
       margin-top: 30px;
       font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--text-color);
+      animation: fadeInDown 0.6s;
     }
+
     .relay-card {
       display: inline-block;
-      background-color: white;
-      padding: 20px;
+      background-color: var(--card-bg);
+      padding: 24px;
       margin: 15px;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      width: 220px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      width: 240px;
       vertical-align: top;
+      transition: var(--transition);
+      animation: fadeIn 0.5s ease-in-out;
+      will-change: transform;
+      border: 1px solid rgba(0,0,0,0.03);
     }
+
+    .relay-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0.5rem 2rem 0 rgba(140,152,164,.15);
+    }
+
     .relay-card h2 {
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-color);
     }
+
     .relay-card p {
       margin-bottom: 10px;
       font-size: 1rem;
     }
+
+    .status-indicator {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 8px;
+      background-color: var(--gray-color);
+    }
+
+    .status-indicator.on {
+      background-color: var(--success-color);
+      box-shadow: 0 0 0 4px rgba(0, 217, 126, 0.2);
+    }
+
+    .status-indicator.off {
+      background-color: var(--gray-color);
+    }
+
     .relay-card button {
-      padding: 10px 20px;
+      padding: 12px 20px;
       border: none;
-      border-radius: 10px;
+      border-radius: var(--border-radius);
       color: white;
-      background-color: blue;
+      background-color: var(--primary-color);
       cursor: pointer;
       font-size: 16px;
-	  width: 90%;
-      transition: opacity 0.3s ease;
+      font-weight: 500;
+      width: 90%;
+      transition: var(--transition);
+      box-shadow: 0 4px 6px rgba(44, 123, 229, 0.1);
     }
+
     .relay-card button:hover {
-      opacity: 0.8;
+      background-color: var(--primary-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 8px rgba(44, 123, 229, 0.15);
     }
+
+    .relay-card button:active {
+      transform: translateY(0);
+    }
+
     #allOffBtn, #logoutBtn {
       max-width: 300px;
       width: 90%;
-      padding: 12px 25px;
+      padding: 14px 25px;
       font-size: 16px;
+      font-weight: 500;
       border: none;
-      border-radius: 10px;
+      border-radius: var(--border-radius);
       cursor: pointer;
       margin: 15px auto;
       display: block;
       color: white;
-      transition: opacity 0.3s ease;
+      transition: var(--transition);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
+
     #allOffBtn {
-      background-color: #d32f2f;
+      background-color: var(--danger-color);
     }
+
     #allOffBtn:hover {
-      opacity: 0.8;
+      background-color: var(--danger-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 8px rgba(230, 55, 87, 0.15);
     }
+
+    #allOffBtn:active {
+      transform: translateY(0);
+    }
+
     #logoutBtn {
-      background-color: #555;
+      background-color: var(--gray-color);
     }
+
     #logoutBtn:hover {
-      opacity: 0.8;
+      background-color: var(--gray-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 8px rgba(149, 170, 201, 0.15);
+    }
+
+    #logoutBtn:active {
+      transform: translateY(0);
     }
 
     /* Responsive layout */
     #dashboard {
       display: none;
+      animation: fadeIn 0.6s;
     }
+
     #loginForm {
       max-width: 400px;
       margin: 80px auto 20px;
-      background: white;
-      padding: 30px 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      background: var(--card-bg);
+      padding: 40px 30px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      animation: fadeInUp 0.6s;
+      border: 1px solid rgba(0,0,0,0.03);
     }
+
+    #loginForm h2 {
+      margin-top: 0;
+      margin-bottom: 25px;
+      color: var(--text-color);
+      font-weight: 600;
+    }
+
     #loginForm input {
       width: 100%;
-      padding: 12px 15px;
+      padding: 14px 16px;
       margin: 10px 0 20px;
       font-size: 1rem;
-      border: 1.5px solid #ccc;
-      border-radius: 10px;
+      border: 1px solid #e3ebf6;
+      border-radius: var(--border-radius);
       box-sizing: border-box;
       outline-offset: 2px;
-      transition: border-color 0.3s ease;
+      transition: var(--transition);
+      background-color: #f9fbfd;
     }
+
     #loginForm input:focus {
-      border-color: #1e88e5;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.15);
+      background-color: white;
     }
+
     #loginForm button {
       width: 100%;
-      background-color: #1e88e5;
+      background-color: var(--primary-color);
       color: white;
-      padding: 12px;
-      font-size: 18px;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 500;
       border: none;
-      border-radius: 10px;
+      border-radius: var(--border-radius);
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: var(--transition);
+      margin-top: 10px;
+      box-shadow: 0 4px 6px rgba(44, 123, 229, 0.1);
     }
+
     #loginForm button:hover {
-      background-color: #1565c0;
+      background-color: var(--primary-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 8px rgba(44, 123, 229, 0.15);
     }
+
+    #loginForm button:active {
+      transform: translateY(0);
+    }
+
     #dashboard .relay-container {
-      max-width: 960px;
-      margin: 20px auto 0;
+      max-width: 1100px;
+      margin: 30px auto 0;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
     }
+
+    /* Loading animation */
+    .loading {
+      position: relative;
+      color: transparent;
+      background-color: #e3ebf6;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .loading::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+      animation: loading 1.5s infinite;
+    }
+
+    @keyframes loading {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
     /* Smaller devices */
     @media (max-width: 700px) {
       .relay-card {
@@ -132,15 +275,61 @@
         margin: 10px auto;
         display: block;
       }
+
       body {
         padding: 0 10px 60px;
       }
     }
+
     footer {
       font-size: 0.9rem;
-      color: #666;
-      padding: 10px 0;
+      color: var(--text-secondary);
+      padding: 20px 0;
       margin-top: 40px;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(0, 217, 126, 0.4);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(0, 217, 126, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(0, 217, 126, 0);
+      }
     }
   </style>
 </head>
@@ -149,6 +338,7 @@
   <h1>ESP32 Relay Control Dashboard</h1>
   <!-- Login form -->
   <div id="loginForm">
+    <h2>Welcome Back</h2>
     <input type="email" id="email" placeholder="Enter Email" required />
     <input type="password" id="password" placeholder="Enter Password" required />
     <button id="loginBtn">Login</button>
@@ -159,25 +349,25 @@
     <div class="relay-container">
       <div class="relay-card">
         <h2>Relay 1</h2>
-        <p>Status: <span id="status1">Loading...</span></p>
+        <p><span class="status-indicator loading"></span>Status: <span id="status1">Loading...</span></p>
         <button id="btn1">Toggle</button>
       </div>
 
       <div class="relay-card">
         <h2>Relay 2</h2>
-        <p>Status: <span id="status2">Loading...</span></p>
+        <p><span class="status-indicator loading"></span>Status: <span id="status2">Loading...</span></p>
         <button id="btn2">Toggle</button>
       </div>
 
       <div class="relay-card">
         <h2>Relay 3</h2>
-        <p>Status: <span id="status3">Loading...</span></p>
+        <p><span class="status-indicator loading"></span>Status: <span id="status3">Loading...</span></p>
         <button id="btn3">Toggle</button>
       </div>
 
       <div class="relay-card">
         <h2>Relay 4</h2>
-        <p>Status: <span id="status4">Loading...</span></p>
+        <p><span class="status-indicator loading"></span>Status: <span id="status4">Loading...</span></p>
         <button id="btn4">Toggle</button>
       </div>
     </div>
@@ -226,6 +416,10 @@
         return;
       }
 
+      // Add loading state
+      loginBtn.innerHTML = 'Logging in...';
+      loginBtn.disabled = true;
+
       // Check hardcoded credentials first
       if(email === allowedEmail && password === allowedPassword){
         // Sign in with Firebase
@@ -238,9 +432,13 @@
           })
           .catch(error => {
             alert("Firebase login failed: " + error.message);
+            loginBtn.innerHTML = 'Login';
+            loginBtn.disabled = false;
           });
       } else {
         alert("Invalid email or password.");
+        loginBtn.innerHTML = 'Login';
+        loginBtn.disabled = false;
       }
     });
 
@@ -256,13 +454,26 @@
 
       relays.forEach(relay => {
         const statusText = document.getElementById(`status${relay.id}`);
+        const statusIndicator = document.querySelector(`#status${relay.id}`).previousElementSibling;
         const toggleButton = document.getElementById(`btn${relay.id}`);
         const relayRef = db.ref("/" + relay.path);
+
+        // Remove loading class initially
+        statusIndicator.classList.remove('loading');
 
         relayRef.on("value", (snapshot) => {
           const state = snapshot.val();
           statusText.innerText = state ? "ON" : "OFF";
-          toggleButton.style.backgroundColor = state ? "green" : "blue";
+          toggleButton.style.backgroundColor = state ? "var(--success-color)" : "var(--primary-color)";
+          
+          // Update status indicator
+          statusIndicator.classList.remove('on', 'off');
+          statusIndicator.classList.add(state ? 'on' : 'off');
+          if (state) {
+            statusIndicator.classList.add('pulse');
+          } else {
+            statusIndicator.classList.remove('pulse');
+          }
         });
 
         toggleButton.onclick = () => {
@@ -291,6 +502,15 @@
           alert("Logout failed: " + error.message);
         });
     };
+
+    // Add animation to login form inputs when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      const inputs = document.querySelectorAll('#loginForm input');
+      inputs.forEach((input, index) => {
+        input.style.animation = `fadeInUp 0.5s ease-out ${index * 0.1}s forwards`;
+        input.style.opacity = '0';
+      });
+    });
   </script>
 </body>
 </html>
