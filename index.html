@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root {
@@ -26,6 +27,37 @@
       --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
+    /* Dark Mode Variables */
+    .dark-mode {
+      --primary-color: #3a86ff;
+      --primary-hover: #2667cc;
+      --danger-color: #ff5a5f;
+      --danger-hover: #e0484d;
+      --gray-color: #6b7b8f;
+      --gray-hover: #4d5b6b;
+      --success-color: #4cc9f0;
+      --warning-color: #f8961e;
+      --card-bg: #1a2a3a;
+      --body-bg: #0d1b2a;
+      --text-color: #e0e1dd;
+      --text-secondary: #778da9;
+      --box-shadow: 0 0.375rem 1.5rem 0 rgba(0,0,0,0.3);
+    }
+
+    .dark-mode body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(#2a3a4a 1px, transparent 1px);
+      background-size: 20px 20px;
+      opacity: 0.2;
+      pointer-events: none;
+      z-index: -1;
+    }
+
     * {
       box-sizing: border-box;
     }
@@ -41,10 +73,150 @@
       min-height: 100vh;
       justify-content: space-between;
       color: var(--text-color);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Header with settings button */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 15px 0;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .settings-btn {
+      background: none;
+      border: none;
+      color: var(--text-color);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: var(--transition);
+      padding: 5px;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .settings-btn:hover {
+      background-color: rgba(0,0,0,0.1);
+    }
+
+    .dark-mode .settings-btn:hover {
+      background-color: rgba(255,255,255,0.1);
+    }
+
+    /* Settings dropdown */
+    .settings-dropdown {
+      position: absolute;
+      top: 60px;
+      right: 15px;
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 15px;
+      width: 250px;
+      z-index: 100;
+      display: none;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .settings-dropdown.show {
+      display: block;
+    }
+
+    .settings-dropdown h3 {
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+      color: var(--text-color);
+    }
+
+    .settings-option {
+      margin-bottom: 15px;
+    }
+
+    .settings-option label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .settings-option select, .settings-option button {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: var(--border-radius);
+      border: 1px solid var(--gray-color);
+      background-color: var(--body-bg);
+      color: var(--text-color);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .mode-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .mode-toggle span {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--gray-color);
+      transition: .4s;
+      border-radius: 24px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .toggle-slider {
+      background-color: var(--primary-color);
+    }
+
+    input:checked + .toggle-slider:before {
+      transform: translateX(26px);
     }
 
     h1 {
-      margin-top: 30px;
+      margin-top: 10px;
       font-size: 1.8rem;
       font-weight: 600;
       color: var(--text-color);
@@ -66,9 +238,17 @@
       border: 1px solid rgba(0,0,0,0.03);
     }
 
+    .dark-mode .relay-card {
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
     .relay-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 0.5rem 2rem 0 rgba(140,152,164,.15);
+    }
+
+    .dark-mode .relay-card:hover {
+      box-shadow: 0 0.5rem 2rem 0 rgba(0,0,0,0.3);
     }
 
     .relay-card h2 {
@@ -86,7 +266,7 @@
     .power-data {
       margin: 15px 0;
       padding: 12px;
-      background-color: #f8fafd;
+      background-color: var(--body-bg);
       border-radius: var(--border-radius);
       text-align: left;
     }
@@ -205,6 +385,10 @@
       border: 1px solid rgba(0,0,0,0.03);
     }
 
+    .dark-mode #loginForm {
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
     #loginForm h2 {
       margin-top: 0;
       margin-bottom: 25px;
@@ -217,18 +401,19 @@
       padding: 14px 16px;
       margin: 10px 0 20px;
       font-size: 1rem;
-      border: 1px solid #e3ebf6;
+      border: 1px solid var(--gray-color);
       border-radius: var(--border-radius);
       box-sizing: border-box;
       outline-offset: 2px;
       transition: var(--transition);
-      background-color: #f9fbfd;
+      background-color: var(--body-bg);
+      color: var(--text-color);
     }
 
     #loginForm input:focus {
       border-color: var(--primary-color);
       box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.15);
-      background-color: white;
+      background-color: var(--card-bg);
     }
 
     #loginForm button {
@@ -285,9 +470,11 @@
       padding: 12px 15px;
       margin: 8px 0 15px;
       font-size: 1rem;
-      border: 1px solid #e3ebf6;
+      border: 1px solid var(--gray-color);
       border-radius: var(--border-radius);
       box-sizing: border-box;
+      background-color: var(--body-bg);
+      color: var(--text-color);
     }
 
     .energy-settings button {
@@ -327,7 +514,7 @@
     .loading {
       position: relative;
       color: transparent;
-      background-color: #e3ebf6;
+      background-color: var(--gray-color);
       border-radius: 4px;
       overflow: hidden;
     }
@@ -358,6 +545,16 @@
 
       body {
         padding: 0 10px 60px;
+      }
+      
+      .header {
+        padding: 15px 10px 0;
+      }
+      
+      .settings-dropdown {
+        right: 10px;
+        width: 90%;
+        max-width: 280px;
       }
     }
 
@@ -415,7 +612,37 @@
 </head>
 <body>
 
-  <h1>Smart Socket Dashboard</h1>
+  <div class="header">
+    <h1>Smart Socket Dashboard</h1>
+    <button class="settings-btn" id="settingsBtn">
+      <i class="fas fa-cog"></i>
+    </button>
+    <div class="settings-dropdown" id="settingsDropdown">
+      <h3>Settings</h3>
+      <div class="settings-option">
+        <label for="currencySelect">Currency</label>
+        <select id="currencySelect">
+          <option value="USD">US Dollar ($)</option>
+          <option value="EUR">Euro (€)</option>
+          <option value="LKR">Sri Lankan Rupee (Rs)</option>
+          <option value="GBP">British Pound (£)</option>
+          <option value="JPY">Japanese Yen (¥)</option>
+          <option value="AUD">Australian Dollar (A$)</option>
+        </select>
+      </div>
+      <div class="settings-option">
+        <label>Appearance</label>
+        <div class="mode-toggle">
+          <span>Dark Mode</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="darkModeToggle">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Login form -->
   <div id="loginForm">
     <h2>Welcome Back</h2>
@@ -535,6 +762,19 @@
     // Energy monitoring variables
     let unitPrice = 0.30; // Default electricity price per kWh
     let systemVoltage = 230; // Default system voltage
+    let currentCurrency = 'USD'; // Default currency
+    let darkModeEnabled = false; // Default to light mode
+    
+    // Currency symbols and formatting
+    const currencyFormats = {
+      'USD': { symbol: '$', decimal: 2, separator: '.', format: (value) => `${this.symbol}${value.toFixed(this.decimal)}` },
+      'EUR': { symbol: '€', decimal: 2, separator: ',', format: (value) => `${this.symbol}${value.toFixed(this.decimal).replace('.', this.separator)}` },
+      'LKR': { symbol: 'Rs ', decimal: 2, separator: '.', format: (value) => `${this.symbol}${value.toFixed(this.decimal)}` },
+      'GBP': { symbol: '£', decimal: 2, separator: '.', format: (value) => `${this.symbol}${value.toFixed(this.decimal)}` },
+      'JPY': { symbol: '¥', decimal: 0, separator: '.', format: (value) => `${this.symbol}${value.toFixed(this.decimal)}` },
+      'AUD': { symbol: 'A$', decimal: 2, separator: '.', format: (value) => `${this.symbol}${value.toFixed(this.decimal)}` }
+    };
+
     let powerChart, costChart;
     let energyData = {
       1: { current: 0, power: 0, energy: 0, cost: 0, lastUpdate: Date.now() },
@@ -546,6 +786,59 @@
     const loginForm = document.getElementById("loginForm");
     const dashboard = document.getElementById("dashboard");
     const loginBtn = document.getElementById("loginBtn");
+    const settingsBtn = document.getElementById("settingsBtn");
+    const settingsDropdown = document.getElementById("settingsDropdown");
+    const darkModeToggle = document.getElementById("darkModeToggle");
+    const currencySelect = document.getElementById("currencySelect");
+
+    // Toggle settings dropdown
+    settingsBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      settingsDropdown.classList.toggle("show");
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", () => {
+      settingsDropdown.classList.remove("show");
+    });
+
+    // Dark mode toggle
+    darkModeToggle.addEventListener("change", () => {
+      darkModeEnabled = darkModeToggle.checked;
+      document.body.classList.toggle("dark-mode", darkModeEnabled);
+      localStorage.setItem("darkMode", darkModeEnabled ? "enabled" : "disabled");
+      updateCharts(); // Refresh charts to match theme
+    });
+
+    // Currency selection
+    currencySelect.addEventListener("change", () => {
+      currentCurrency = currencySelect.value;
+      localStorage.setItem("currency", currentCurrency);
+      updateAllEnergyCalculations();
+    });
+
+    // Load saved preferences
+    function loadPreferences() {
+      // Dark mode
+      if (localStorage.getItem("darkMode") === "enabled") {
+        darkModeToggle.checked = true;
+        document.body.classList.add("dark-mode");
+        darkModeEnabled = true;
+      }
+      
+      // Currency
+      const savedCurrency = localStorage.getItem("currency");
+      if (savedCurrency && currencyFormats[savedCurrency]) {
+        currentCurrency = savedCurrency;
+        currencySelect.value = currentCurrency;
+      }
+    }
+
+    // Format currency based on selection
+    function formatCurrency(value) {
+      const format = currencyFormats[currentCurrency] || currencyFormats['USD'];
+      return format.format(value);
+    }
 
     loginBtn.addEventListener("click", () => {
       const email = document.getElementById("email").value.trim();
@@ -649,7 +942,7 @@
           document.getElementById(`current${relay.id}`).textContent = current.toFixed(2);
           document.getElementById(`power${relay.id}`).textContent = energyData[relay.id].power.toFixed(2);
           document.getElementById(`energy${relay.id}`).textContent = energyData[relay.id].energy.toFixed(3);
-          document.getElementById(`cost${relay.id}`).textContent = `$${energyData[relay.id].cost.toFixed(2)}`;
+          document.getElementById(`cost${relay.id}`).textContent = formatCurrency(energyData[relay.id].cost);
           
           // Update charts
           updateCharts();
@@ -673,6 +966,31 @@
       const powerCtx = document.getElementById('powerChart').getContext('2d');
       const costCtx = document.getElementById('costChart').getContext('2d');
       
+      // Chart color based on theme
+      const barColors = darkModeEnabled ? [
+        'rgba(58, 134, 255, 0.7)',
+        'rgba(76, 201, 240, 0.7)',
+        'rgba(255, 90, 95, 0.7)',
+        'rgba(248, 150, 30, 0.7)'
+      ] : [
+        'rgba(44, 123, 229, 0.7)',
+        'rgba(0, 217, 126, 0.7)',
+        'rgba(230, 55, 87, 0.7)',
+        'rgba(246, 195, 67, 0.7)'
+      ];
+      
+      const borderColors = darkModeEnabled ? [
+        'rgba(58, 134, 255, 1)',
+        'rgba(76, 201, 240, 1)',
+        'rgba(255, 90, 95, 1)',
+        'rgba(248, 150, 30, 1)'
+      ] : [
+        'rgba(44, 123, 229, 1)',
+        'rgba(0, 217, 126, 1)',
+        'rgba(230, 55, 87, 1)',
+        'rgba(246, 195, 67, 1)'
+      ];
+      
       powerChart = new Chart(powerCtx, {
         type: 'bar',
         data: {
@@ -680,18 +998,8 @@
           datasets: [{
             label: 'Power (W)',
             data: [0, 0, 0, 0],
-            backgroundColor: [
-              'rgba(44, 123, 229, 0.7)',
-              'rgba(0, 217, 126, 0.7)',
-              'rgba(230, 55, 87, 0.7)',
-              'rgba(246, 195, 67, 0.7)'
-            ],
-            borderColor: [
-              'rgba(44, 123, 229, 1)',
-              'rgba(0, 217, 126, 1)',
-              'rgba(230, 55, 87, 1)',
-              'rgba(246, 195, 67, 1)'
-            ],
+            backgroundColor: barColors,
+            borderColor: borderColors,
             borderWidth: 1
           }]
         },
@@ -702,7 +1010,29 @@
               beginAtZero: true,
               title: {
                 display: true,
-                text: 'Power (W)'
+                text: 'Power (W)',
+                color: darkModeEnabled ? '#e0e1dd' : '#12263f'
+              },
+              grid: {
+                color: darkModeEnabled ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'
+              },
+              ticks: {
+                color: darkModeEnabled ? '#e0e1dd' : '#12263f'
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              },
+              ticks: {
+                color: darkModeEnabled ? '#e0e1dd' : '#12263f'
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              labels: {
+                color: darkModeEnabled ? '#e0e1dd' : '#12263f'
               }
             }
           }
@@ -714,20 +1044,10 @@
         data: {
           labels: ['Socket 1', 'Socket 2', 'Socket 3', 'Socket 4'],
           datasets: [{
-            label: 'Cost ($)',
+            label: `Cost (${currentCurrency})`,
             data: [0, 0, 0, 0],
-            backgroundColor: [
-              'rgba(44, 123, 229, 0.7)',
-              'rgba(0, 217, 126, 0.7)',
-              'rgba(230, 55, 87, 0.7)',
-              'rgba(246, 195, 67, 0.7)'
-            ],
-            borderColor: [
-              'rgba(44, 123, 229, 1)',
-              'rgba(0, 217, 126, 1)',
-              'rgba(230, 55, 87, 1)',
-              'rgba(246, 195, 67, 1)'
-            ],
+            backgroundColor: barColors,
+            borderColor: borderColors,
             borderWidth: 1
           }]
         },
@@ -738,7 +1058,29 @@
               beginAtZero: true,
               title: {
                 display: true,
-                text: 'Cost ($)'
+                text: `Cost (${currentCurrency})`,
+                color: darkModeEnabled ? '#e0e1dd' : '#12263f'
+              },
+              grid: {
+                color: darkModeEnabled ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'
+              },
+              ticks: {
+                color: darkModeEnabled ? '#e0e1dd' : '#12263f'
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              },
+              ticks: {
+                color: darkModeEnabled ? '#e0e1dd' : '#12263f'
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              labels: {
+                color: darkModeEnabled ? '#e0e1dd' : '#12263f'
               }
             }
           }
@@ -754,7 +1096,6 @@
           energyData[3].power,
           energyData[4].power
         ];
-        powerChart.update();
         
         costChart.data.datasets[0].data = [
           energyData[1].cost,
@@ -762,6 +1103,12 @@
           energyData[3].cost,
           energyData[4].cost
         ];
+        
+        // Update currency label if changed
+        costChart.data.datasets[0].label = `Cost (${currentCurrency})`;
+        costChart.options.scales.y.title.text = `Cost (${currentCurrency})`;
+        
+        powerChart.update();
         costChart.update();
       }
     }
@@ -786,7 +1133,7 @@
         // Update UI
         document.getElementById(`power${i}`).textContent = energyData[i].power.toFixed(2);
         document.getElementById(`energy${i}`).textContent = energyData[i].energy.toFixed(3);
-        document.getElementById(`cost${i}`).textContent = `$${energyData[i].cost.toFixed(2)}`;
+        document.getElementById(`cost${i}`).textContent = formatCurrency(energyData[i].cost);
       }
       
       updateCharts();
@@ -812,6 +1159,9 @@
         input.style.animation = `fadeInUp 0.5s ease-out ${index * 0.1}s forwards`;
         input.style.opacity = '0';
       });
+      
+      // Load saved preferences
+      loadPreferences();
     });
   </script>
 </body>
