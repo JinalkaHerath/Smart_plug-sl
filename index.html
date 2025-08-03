@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root {
       --primary-color: #2c7be5;
@@ -15,6 +16,7 @@
       --gray-color: #95aac9;
       --gray-hover: #6e84a3;
       --success-color: #00d97e;
+      --warning-color: #f6c343;
       --card-bg: #ffffff;
       --body-bg: #f5f7fa;
       --text-color: #12263f;
@@ -56,7 +58,7 @@
       margin: 15px;
       border-radius: var(--border-radius);
       box-shadow: var(--box-shadow);
-      width: 240px;
+      width: 280px;
       vertical-align: top;
       transition: var(--transition);
       animation: fadeIn 0.5s ease-in-out;
@@ -79,6 +81,25 @@
     .relay-card p {
       margin-bottom: 10px;
       font-size: 1rem;
+    }
+
+    .power-data {
+      margin: 15px 0;
+      padding: 12px;
+      background-color: #f8fafd;
+      border-radius: var(--border-radius);
+      text-align: left;
+    }
+
+    .power-data p {
+      margin: 8px 0;
+      font-size: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .power-data span {
+      font-weight: 500;
     }
 
     .status-indicator {
@@ -236,11 +257,70 @@
     }
 
     #dashboard .relay-container {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 30px auto 0;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+    }
+
+    /* Energy settings */
+    .energy-settings {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+
+    .energy-settings h3 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      color: var(--text-color);
+    }
+
+    .energy-settings input {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 8px 0 15px;
+      font-size: 1rem;
+      border: 1px solid #e3ebf6;
+      border-radius: var(--border-radius);
+      box-sizing: border-box;
+    }
+
+    .energy-settings button {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .energy-settings button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    /* Charts */
+    .chart-container {
+      width: 100%;
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+
+    .chart-container h3 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      color: var(--text-color);
     }
 
     /* Loading animation */
@@ -346,30 +426,79 @@
 
   <!-- Dashboard -->
   <div id="dashboard">
+    <div class="energy-settings">
+      <h3>Energy Cost Settings</h3>
+      <div style="display: flex; gap: 15px;">
+        <div style="flex: 1;">
+          <label for="unitPrice">Electricity Price (per kWh)</label>
+          <input type="number" id="unitPrice" placeholder="0.30" step="0.01" min="0" value="0.30">
+        </div>
+        <div style="flex: 1;">
+          <label for="voltage">System Voltage (V)</label>
+          <input type="number" id="voltage" placeholder="230" min="0" value="230">
+        </div>
+      </div>
+      <button id="updateSettings">Update Settings</button>
+    </div>
+
     <div class="relay-container">
       <div class="relay-card">
         <h2>Socket 1</h2>
         <p><span class="status-indicator loading"></span>Status: <span id="status1">Loading...</span></p>
+        <div class="power-data">
+          <p>Current: <span id="current1">0.00</span> A</p>
+          <p>Power: <span id="power1">0.00</span> W</p>
+          <p>Energy: <span id="energy1">0.00</span> kWh</p>
+          <p>Cost: <span id="cost1">$0.00</span></p>
+        </div>
         <button id="btn1">Toggle</button>
       </div>
 
       <div class="relay-card">
         <h2>Socket 2</h2>
         <p><span class="status-indicator loading"></span>Status: <span id="status2">Loading...</span></p>
+        <div class="power-data">
+          <p>Current: <span id="current2">0.00</span> A</p>
+          <p>Power: <span id="power2">0.00</span> W</p>
+          <p>Energy: <span id="energy2">0.00</span> kWh</p>
+          <p>Cost: <span id="cost2">$0.00</span></p>
+        </div>
         <button id="btn2">Toggle</button>
       </div>
 
       <div class="relay-card">
         <h2>Socket 3</h2>
         <p><span class="status-indicator loading"></span>Status: <span id="status3">Loading...</span></p>
+        <div class="power-data">
+          <p>Current: <span id="current3">0.00</span> A</p>
+          <p>Power: <span id="power3">0.00</span> W</p>
+          <p>Energy: <span id="energy3">0.00</span> kWh</p>
+          <p>Cost: <span id="cost3">$0.00</span></p>
+        </div>
         <button id="btn3">Toggle</button>
       </div>
 
       <div class="relay-card">
         <h2>Socket 4</h2>
         <p><span class="status-indicator loading"></span>Status: <span id="status4">Loading...</span></p>
+        <div class="power-data">
+          <p>Current: <span id="current4">0.00</span> A</p>
+          <p>Power: <span id="power4">0.00</span> W</p>
+          <p>Energy: <span id="energy4">0.00</span> kWh</p>
+          <p>Cost: <span id="cost4">$0.00</span></p>
+        </div>
         <button id="btn4">Toggle</button>
       </div>
+    </div>
+
+    <div class="chart-container">
+      <h3>Power Consumption Comparison</h3>
+      <canvas id="powerChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <h3>Energy Cost Comparison</h3>
+      <canvas id="costChart"></canvas>
     </div>
 
     <button id="allOffBtn">All OFF</button>
@@ -403,6 +532,17 @@
     const allowedEmail = "jimalkaperera@gmail.com";
     const allowedPassword = "Jinalka@1999";
 
+    // Energy monitoring variables
+    let unitPrice = 0.30; // Default electricity price per kWh
+    let systemVoltage = 230; // Default system voltage
+    let powerChart, costChart;
+    let energyData = {
+      1: { current: 0, power: 0, energy: 0, cost: 0, lastUpdate: Date.now() },
+      2: { current: 0, power: 0, energy: 0, cost: 0, lastUpdate: Date.now() },
+      3: { current: 0, power: 0, energy: 0, cost: 0, lastUpdate: Date.now() },
+      4: { current: 0, power: 0, energy: 0, cost: 0, lastUpdate: Date.now() }
+    };
+
     const loginForm = document.getElementById("loginForm");
     const dashboard = document.getElementById("dashboard");
     const loginBtn = document.getElementById("loginBtn");
@@ -429,6 +569,7 @@
             loginForm.style.display = "none";
             dashboard.style.display = "block";
             startRelayControl();
+            initializeCharts();
           })
           .catch(error => {
             alert("Firebase login failed: " + error.message);
@@ -446,21 +587,30 @@
       const db = firebase.database();
 
       const relays = [
-        { id: 1, path: "relay1" },
-        { id: 2, path: "relay2" },
-        { id: 3, path: "relay3" },
-        { id: 4, path: "relay4" },
+        { id: 1, path: "relay1", currentPath: "current1" },
+        { id: 2, path: "relay2", currentPath: "current2" },
+        { id: 3, path: "relay3", currentPath: "current3" },
+        { id: 4, path: "relay4", currentPath: "current4" },
       ];
+
+      // Update energy settings
+      document.getElementById("updateSettings").addEventListener("click", () => {
+        unitPrice = parseFloat(document.getElementById("unitPrice").value) || 0.30;
+        systemVoltage = parseFloat(document.getElementById("voltage").value) || 230;
+        updateAllEnergyCalculations();
+      });
 
       relays.forEach(relay => {
         const statusText = document.getElementById(`status${relay.id}`);
         const statusIndicator = document.querySelector(`#status${relay.id}`).previousElementSibling;
         const toggleButton = document.getElementById(`btn${relay.id}`);
         const relayRef = db.ref("/" + relay.path);
+        const currentRef = db.ref("/" + relay.currentPath);
 
         // Remove loading class initially
         statusIndicator.classList.remove('loading');
 
+        // Relay status listener
         relayRef.on("value", (snapshot) => {
           const state = snapshot.val();
           statusText.innerText = state ? "ON" : "OFF";
@@ -476,6 +626,35 @@
           }
         });
 
+        // Current sensor listener
+        currentRef.on("value", (snapshot) => {
+          const current = parseFloat(snapshot.val()) || 0;
+          const now = Date.now();
+          const timeDiff = (now - energyData[relay.id].lastUpdate) / 3600000; // Convert ms to hours
+          
+          // Update energy data
+          energyData[relay.id].current = current;
+          energyData[relay.id].power = current * systemVoltage;
+          
+          // Only accumulate energy if relay is on (you'll need to check relay status here)
+          // For simplicity, we'll assume if current > 0, the relay is on
+          if (current > 0.01) { // Small threshold to account for sensor noise
+            energyData[relay.id].energy += energyData[relay.id].power * timeDiff / 1000; // Convert to kWh
+            energyData[relay.id].cost = energyData[relay.id].energy * unitPrice;
+          }
+          
+          energyData[relay.id].lastUpdate = now;
+          
+          // Update UI
+          document.getElementById(`current${relay.id}`).textContent = current.toFixed(2);
+          document.getElementById(`power${relay.id}`).textContent = energyData[relay.id].power.toFixed(2);
+          document.getElementById(`energy${relay.id}`).textContent = energyData[relay.id].energy.toFixed(3);
+          document.getElementById(`cost${relay.id}`).textContent = `$${energyData[relay.id].cost.toFixed(2)}`;
+          
+          // Update charts
+          updateCharts();
+        });
+
         toggleButton.onclick = () => {
           relayRef.get().then(snap => {
             relayRef.set(!snap.val());
@@ -488,6 +667,129 @@
           db.ref("/" + relay.path).set(false);
         });
       };
+    }
+
+    function initializeCharts() {
+      const powerCtx = document.getElementById('powerChart').getContext('2d');
+      const costCtx = document.getElementById('costChart').getContext('2d');
+      
+      powerChart = new Chart(powerCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Socket 1', 'Socket 2', 'Socket 3', 'Socket 4'],
+          datasets: [{
+            label: 'Power (W)',
+            data: [0, 0, 0, 0],
+            backgroundColor: [
+              'rgba(44, 123, 229, 0.7)',
+              'rgba(0, 217, 126, 0.7)',
+              'rgba(230, 55, 87, 0.7)',
+              'rgba(246, 195, 67, 0.7)'
+            ],
+            borderColor: [
+              'rgba(44, 123, 229, 1)',
+              'rgba(0, 217, 126, 1)',
+              'rgba(230, 55, 87, 1)',
+              'rgba(246, 195, 67, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Power (W)'
+              }
+            }
+          }
+        }
+      });
+      
+      costChart = new Chart(costCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Socket 1', 'Socket 2', 'Socket 3', 'Socket 4'],
+          datasets: [{
+            label: 'Cost ($)',
+            data: [0, 0, 0, 0],
+            backgroundColor: [
+              'rgba(44, 123, 229, 0.7)',
+              'rgba(0, 217, 126, 0.7)',
+              'rgba(230, 55, 87, 0.7)',
+              'rgba(246, 195, 67, 0.7)'
+            ],
+            borderColor: [
+              'rgba(44, 123, 229, 1)',
+              'rgba(0, 217, 126, 1)',
+              'rgba(230, 55, 87, 1)',
+              'rgba(246, 195, 67, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Cost ($)'
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function updateCharts() {
+      if (powerChart && costChart) {
+        powerChart.data.datasets[0].data = [
+          energyData[1].power,
+          energyData[2].power,
+          energyData[3].power,
+          energyData[4].power
+        ];
+        powerChart.update();
+        
+        costChart.data.datasets[0].data = [
+          energyData[1].cost,
+          energyData[2].cost,
+          energyData[3].cost,
+          energyData[4].cost
+        ];
+        costChart.update();
+      }
+    }
+
+    function updateAllEnergyCalculations() {
+      const now = Date.now();
+      for (let i = 1; i <= 4; i++) {
+        const timeDiff = (now - energyData[i].lastUpdate) / 3600000; // Convert ms to hours
+        
+        // Recalculate power
+        energyData[i].power = energyData[i].current * systemVoltage;
+        
+        // Recalculate energy if device was on
+        if (energyData[i].current > 0.01) {
+          energyData[i].energy += energyData[i].power * timeDiff / 1000; // Convert to kWh
+        }
+        
+        // Recalculate cost with new unit price
+        energyData[i].cost = energyData[i].energy * unitPrice;
+        energyData[i].lastUpdate = now;
+        
+        // Update UI
+        document.getElementById(`power${i}`).textContent = energyData[i].power.toFixed(2);
+        document.getElementById(`energy${i}`).textContent = energyData[i].energy.toFixed(3);
+        document.getElementById(`cost${i}`).textContent = `$${energyData[i].cost.toFixed(2)}`;
+      }
+      
+      updateCharts();
     }
 
     document.getElementById("logoutBtn").onclick = () => {
