@@ -669,10 +669,12 @@
     </div>
 
     <div class="relay-container">
+      <!-- Socket 1 -->
       <div class="relay-card">
         <h2>Socket 1</h2>
         <p><span class="status-indicator loading"></span>Status: <span id="status1">Loading...</span></p>
         <div class="power-data">
+          <p>Voltage: <span id="voltage1">0.00</span> V</p>
           <p>Current: <span id="current1">0.00</span> A</p>
           <p>Power: <span id="power1">0.00</span> W</p>
           <p>Energy: <span id="energy1">0.00</span> kWh</p>
@@ -681,10 +683,12 @@
         <button id="btn1">Toggle</button>
       </div>
 
+      <!-- Socket 2 -->
       <div class="relay-card">
         <h2>Socket 2</h2>
         <p><span class="status-indicator loading"></span>Status: <span id="status2">Loading...</span></p>
         <div class="power-data">
+          <p>Voltage: <span id="voltage2">0.00</span> V</p>
           <p>Current: <span id="current2">0.00</span> A</p>
           <p>Power: <span id="power2">0.00</span> W</p>
           <p>Energy: <span id="energy2">0.00</span> kWh</p>
@@ -693,10 +697,12 @@
         <button id="btn2">Toggle</button>
       </div>
 
+      <!-- Socket 3 -->
       <div class="relay-card">
         <h2>Socket 3</h2>
         <p><span class="status-indicator loading"></span>Status: <span id="status3">Loading...</span></p>
         <div class="power-data">
+          <p>Voltage: <span id="voltage3">0.00</span> V</p>
           <p>Current: <span id="current3">0.00</span> A</p>
           <p>Power: <span id="power3">0.00</span> W</p>
           <p>Energy: <span id="energy3">0.00</span> kWh</p>
@@ -705,10 +711,12 @@
         <button id="btn3">Toggle</button>
       </div>
 
+      <!-- Socket 4 -->
       <div class="relay-card">
         <h2>Socket 4</h2>
         <p><span class="status-indicator loading"></span>Status: <span id="status4">Loading...</span></p>
         <div class="power-data">
+          <p>Voltage: <span id="voltage4">0.00</span> V</p>
           <p>Current: <span id="current4">0.00</span> A</p>
           <p>Power: <span id="power4">0.00</span> W</p>
           <p>Energy: <span id="energy4">0.00</span> kWh</p>
@@ -743,27 +751,27 @@
 
   <script>
     // Firebase config
-     const firebaseConfig = {
-       apiKey: "AIzaSyDRobNTnJIGFKeLQgg3qvtmGYyBA52OvLk",
-       authDomain: "iot-plug-5a896.firebaseapp.com",
-       databaseURL: "https://iot-plug-5a896-default-rtdb.asia-southeast1.firebasedatabase.app",
-       projectId: "iot-plug-5a896",
-       storageBucket: "iot-plug-5a896.firebasestorage.app",
-       messagingSenderId: "751077979174",
-       appId: "1:751077979174:web:5763486777df938f7062e7"
+    const firebaseConfig = {
+      apiKey: "AIzaSyDRobNTnJIGFKeLQgg3qvtmGYyBA52OvLk",
+      authDomain: "iot-plug-5a896.firebaseapp.com",
+      databaseURL: "https://iot-plug-5a896-default-rtdb.asia-southeast1.firebasedatabase.app/",
+      projectId: "iot-plug-5a896",
+      storageBucket: "iot-plug-5a896.firebasestorage.app",
+      messagingSenderId: "751077979174",
+      appId: "1:751077979174:web:5763486777df938f7062e7"
     };
 
     firebase.initializeApp(firebaseConfig);
 
-    // Predefined login credentials (can be replaced with your logic)
+    // Predefined login credentials
     const allowedEmail = "jimalkaperera@gmail.com";
     const allowedPassword = "Jinalka@1999";
 
     // Energy monitoring variables
-    let unitPrice = 0.30; // Default electricity price per kWh
-    let systemVoltage = 230; // Default system voltage
-    let currentCurrency = 'USD'; // Default currency
-    let darkModeEnabled = false; // Default to light mode
+    let unitPrice = 0.30;
+    let systemVoltage = 230;
+    let currentCurrency = 'USD';
+    let darkModeEnabled = false;
     
     // Currency symbols and formatting
     const currencyFormats = {
@@ -777,10 +785,10 @@
 
     let powerChart, costChart;
     let energyData = {
-      1: { current: 0, power: 0, energy: 0, cost: 0, lastUpdate: Date.now() },
-      2: { current: 0, power: 0, energy: 0, cost: 0, lastUpdate: Date.now() },
-      3: { current: 0, power: 0, energy: 0, cost: 0, lastUpdate: Date.now() },
-      4: { current: 0, power: 0, energy: 0, cost: 0, lastUpdate: Date.now() }
+      1: { voltage: 0, current: 0, power: 0, energy: 0, cost: 0, lastUpdate: Date.now() },
+      2: { voltage: 0, current: 0, power: 0, energy: 0, cost: 0, lastUpdate: Date.now() },
+      3: { voltage: 0, current: 0, power: 0, energy: 0, cost: 0, lastUpdate: Date.now() },
+      4: { voltage: 0, current: 0, power: 0, energy: 0, cost: 0, lastUpdate: Date.now() }
     };
 
     const loginForm = document.getElementById("loginForm");
@@ -807,7 +815,7 @@
       darkModeEnabled = darkModeToggle.checked;
       document.body.classList.toggle("dark-mode", darkModeEnabled);
       localStorage.setItem("darkMode", darkModeEnabled ? "enabled" : "disabled");
-      updateCharts(); // Refresh charts to match theme
+      updateCharts();
     });
 
     // Currency selection
@@ -819,14 +827,12 @@
 
     // Load saved preferences
     function loadPreferences() {
-      // Dark mode
       if (localStorage.getItem("darkMode") === "enabled") {
         darkModeToggle.checked = true;
         document.body.classList.add("dark-mode");
         darkModeEnabled = true;
       }
       
-      // Currency
       const savedCurrency = localStorage.getItem("currency");
       if (savedCurrency && currencyFormats[savedCurrency]) {
         currentCurrency = savedCurrency;
@@ -849,13 +855,10 @@
         return;
       }
 
-      // Add loading state
       loginBtn.innerHTML = 'Logging in...';
       loginBtn.disabled = true;
 
-      // Check hardcoded credentials first
       if(email === allowedEmail && password === allowedPassword){
-        // Sign in with Firebase
         firebase.auth().signInWithEmailAndPassword(email, password)
           .then(userCredential => {
             console.log("Signed in as", userCredential.user.email);
@@ -880,10 +883,10 @@
       const db = firebase.database();
 
       const relays = [
-        { id: 1, path: "relay1", currentPath: "current1" },
-        { id: 2, path: "relay2", currentPath: "current2" },
-        { id: 3, path: "relay3", currentPath: "current3" },
-        { id: 4, path: "relay4", currentPath: "current4" },
+        { id: 1, path: "relay1", sensorPath: "sensors/socket1" },
+        { id: 2, path: "relay2", sensorPath: "sensors/socket2" },
+        { id: 3, path: "relay3", sensorPath: "sensors/socket3" },
+        { id: 4, path: "relay4", sensorPath: "sensors/socket4" },
       ];
 
       // Update energy settings
@@ -893,12 +896,43 @@
         updateAllEnergyCalculations();
       });
 
+      // Listen for sensor data updates
+      db.ref("/sensors").on("value", (snapshot) => {
+        const sensorData = snapshot.val();
+        
+        relays.forEach(relay => {
+          if (sensorData && sensorData[`socket${relay.id}`]) {
+            const socketData = sensorData[`socket${relay.id}`];
+            const now = Date.now();
+            const timeDiff = (now - energyData[relay.id].lastUpdate) / 3600000;
+            
+            // Update all sensor values
+            energyData[relay.id].voltage = socketData.voltage || 0;
+            energyData[relay.id].current = socketData.current || 0;
+            energyData[relay.id].power = socketData.power || 0;
+            
+            // Convert Wh to kWh for display
+            energyData[relay.id].energy = (socketData.energy || 0) / 1000;
+            energyData[relay.id].cost = energyData[relay.id].energy * unitPrice;
+            energyData[relay.id].lastUpdate = now;
+            
+            // Update UI
+            document.getElementById(`voltage${relay.id}`).textContent = energyData[relay.id].voltage.toFixed(2);
+            document.getElementById(`current${relay.id}`).textContent = energyData[relay.id].current.toFixed(2);
+            document.getElementById(`power${relay.id}`).textContent = energyData[relay.id].power.toFixed(2);
+            document.getElementById(`energy${relay.id}`).textContent = energyData[relay.id].energy.toFixed(3);
+            document.getElementById(`cost${relay.id}`).textContent = formatCurrency(energyData[relay.id].cost);
+          }
+        });
+        
+        updateCharts();
+      });
+
       relays.forEach(relay => {
         const statusText = document.getElementById(`status${relay.id}`);
         const statusIndicator = document.querySelector(`#status${relay.id}`).previousElementSibling;
         const toggleButton = document.getElementById(`btn${relay.id}`);
         const relayRef = db.ref("/" + relay.path);
-        const currentRef = db.ref("/" + relay.currentPath);
 
         // Remove loading class initially
         statusIndicator.classList.remove('loading');
@@ -919,35 +953,6 @@
           }
         });
 
-        // Current sensor listener
-        currentRef.on("value", (snapshot) => {
-          const current = parseFloat(snapshot.val()) || 0;
-          const now = Date.now();
-          const timeDiff = (now - energyData[relay.id].lastUpdate) / 3600000; // Convert ms to hours
-          
-          // Update energy data
-          energyData[relay.id].current = current;
-          energyData[relay.id].power = current * systemVoltage;
-          
-          // Only accumulate energy if relay is on (you'll need to check relay status here)
-          // For simplicity, we'll assume if current > 0, the relay is on
-          if (current > 0.01) { // Small threshold to account for sensor noise
-            energyData[relay.id].energy += energyData[relay.id].power * timeDiff / 1000; // Convert to kWh
-            energyData[relay.id].cost = energyData[relay.id].energy * unitPrice;
-          }
-          
-          energyData[relay.id].lastUpdate = now;
-          
-          // Update UI
-          document.getElementById(`current${relay.id}`).textContent = current.toFixed(2);
-          document.getElementById(`power${relay.id}`).textContent = energyData[relay.id].power.toFixed(2);
-          document.getElementById(`energy${relay.id}`).textContent = energyData[relay.id].energy.toFixed(3);
-          document.getElementById(`cost${relay.id}`).textContent = formatCurrency(energyData[relay.id].cost);
-          
-          // Update charts
-          updateCharts();
-        });
-
         toggleButton.onclick = () => {
           relayRef.get().then(snap => {
             relayRef.set(!snap.val());
@@ -966,7 +971,6 @@
       const powerCtx = document.getElementById('powerChart').getContext('2d');
       const costCtx = document.getElementById('costChart').getContext('2d');
       
-      // Chart color based on theme
       const barColors = darkModeEnabled ? [
         'rgba(58, 134, 255, 0.7)',
         'rgba(76, 201, 240, 0.7)',
@@ -1104,7 +1108,6 @@
           energyData[4].cost
         ];
         
-        // Update currency label if changed
         costChart.data.datasets[0].label = `Cost (${currentCurrency})`;
         costChart.options.scales.y.title.text = `Cost (${currentCurrency})`;
         
@@ -1116,26 +1119,9 @@
     function updateAllEnergyCalculations() {
       const now = Date.now();
       for (let i = 1; i <= 4; i++) {
-        const timeDiff = (now - energyData[i].lastUpdate) / 3600000; // Convert ms to hours
-        
-        // Recalculate power
-        energyData[i].power = energyData[i].current * systemVoltage;
-        
-        // Recalculate energy if device was on
-        if (energyData[i].current > 0.01) {
-          energyData[i].energy += energyData[i].power * timeDiff / 1000; // Convert to kWh
-        }
-        
-        // Recalculate cost with new unit price
         energyData[i].cost = energyData[i].energy * unitPrice;
-        energyData[i].lastUpdate = now;
-        
-        // Update UI
-        document.getElementById(`power${i}`).textContent = energyData[i].power.toFixed(2);
-        document.getElementById(`energy${i}`).textContent = energyData[i].energy.toFixed(3);
         document.getElementById(`cost${i}`).textContent = formatCurrency(energyData[i].cost);
       }
-      
       updateCharts();
     }
 
@@ -1152,7 +1138,6 @@
         });
     };
 
-    // Add animation to login form inputs when page loads
     document.addEventListener('DOMContentLoaded', function() {
       const inputs = document.querySelectorAll('#loginForm input');
       inputs.forEach((input, index) => {
@@ -1160,7 +1145,6 @@
         input.style.opacity = '0';
       });
       
-      // Load saved preferences
       loadPreferences();
     });
   </script>
