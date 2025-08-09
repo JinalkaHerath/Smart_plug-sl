@@ -230,7 +230,7 @@
       margin: 15px;
       border-radius: var(--border-radius);
       box-shadow: var(--box-shadow);
-      width: 280px;
+      width: 320px;
       vertical-align: top;
       transition: var(--transition);
       animation: fadeIn 0.5s ease-in-out;
@@ -298,6 +298,156 @@
 
     .status-indicator.off {
       background-color: var(--gray-color);
+    }
+
+    /* Scheduling Section Styles */
+    .schedule-section {
+      margin-top: 15px;
+      padding: 15px;
+      background-color: var(--body-bg);
+      border-radius: var(--border-radius);
+      text-align: left;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .dark-mode .schedule-section {
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .schedule-section h4 {
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: var(--text-color);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+    }
+
+    .schedule-section h4 i {
+      margin-right: 8px;
+      color: var(--primary-color);
+    }
+
+    .schedule-toggle {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .schedule-toggle label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .schedule-toggle input[type="checkbox"] {
+      margin-right: 8px;
+      transform: scale(1.1);
+    }
+
+    .time-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .time-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .time-group label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .time-input-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .time-input {
+      flex: 1;
+      padding: 8px 10px;
+      border: 1px solid var(--gray-color);
+      border-radius: 6px;
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      font-size: 0.9rem;
+      font-family: 'Inter', sans-serif;
+      transition: var(--transition);
+    }
+
+    .time-input:focus {
+      border-color: var(--primary-color);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(44, 123, 229, 0.1);
+    }
+
+    .ampm-select {
+      padding: 8px 6px;
+      border: 1px solid var(--gray-color);
+      border-radius: 6px;
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      font-size: 0.85rem;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .ampm-select:focus {
+      border-color: var(--primary-color);
+      outline: none;
+    }
+
+    .schedule-status {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 8px;
+      padding: 6px 8px;
+      background-color: var(--card-bg);
+      border-radius: 4px;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .dark-mode .schedule-status {
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .schedule-status.active {
+      color: var(--success-color);
+      border-color: var(--success-color);
+      background-color: rgba(0, 217, 126, 0.1);
+    }
+
+    .save-schedule-btn {
+      width: 100%;
+      padding: 8px 12px;
+      background-color: var(--warning-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 10px;
+    }
+
+    .save-schedule-btn:hover {
+      background-color: #f4911a;
+      transform: translateY(-1px);
+    }
+
+    .save-schedule-btn:active {
+      transform: translateY(0);
     }
 
     .relay-card button {
@@ -442,7 +592,7 @@
     }
 
     #dashboard .relay-container {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 30px auto 0;
       display: flex;
       flex-wrap: wrap;
@@ -538,7 +688,7 @@
     /* Smaller devices */
     @media (max-width: 700px) {
       .relay-card {
-        width: 90%;
+        width: 95%;
         margin: 10px auto;
         display: block;
       }
@@ -555,6 +705,11 @@
         right: 10px;
         width: 90%;
         max-width: 280px;
+      }
+
+      .time-inputs {
+        grid-template-columns: 1fr;
+        gap: 8px;
       }
     }
 
@@ -680,6 +835,46 @@
           <p>Energy: <span id="energy1">0.00</span> kWh</p>
           <p>Cost: <span id="cost1">$0.00</span></p>
         </div>
+        
+        <!-- Scheduling Section -->
+        <div class="schedule-section">
+          <h4><i class="fas fa-clock"></i>Schedule</h4>
+          <div class="schedule-toggle">
+            <label>
+              <input type="checkbox" id="scheduleEnabled1" onchange="toggleSchedule(1)">
+              Enable Scheduling
+            </label>
+          </div>
+          <div class="time-inputs" id="timeInputs1" style="display: none;">
+            <div class="time-group">
+              <label>Turn ON at:</label>
+              <div class="time-input-row">
+                <input type="number" id="onHour1" class="time-input" min="1" max="12" placeholder="12" value="12">
+                <span>:</span>
+                <input type="number" id="onMinute1" class="time-input" min="0" max="59" placeholder="00" value="0">
+                <select id="onAMPM1" class="ampm-select">
+                  <option value="false">AM</option>
+                  <option value="true">PM</option>
+                </select>
+              </div>
+            </div>
+            <div class="time-group">
+              <label>Turn OFF at:</label>
+              <div class="time-input-row">
+                <input type="number" id="offHour1" class="time-input" min="1" max="12" placeholder="12" value="12">
+                <span>:</span>
+                <input type="number" id="offMinute1" class="time-input" min="0" max="59" placeholder="30" value="30">
+                <select id="offAMPM1" class="ampm-select">
+                  <option value="false">AM</option>
+                  <option value="true">PM</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="schedule-status" id="scheduleStatus1">Schedule disabled</div>
+          <button class="save-schedule-btn" onclick="saveSchedule(1)">Save Schedule</button>
+        </div>
+        
         <button id="btn1">Toggle</button>
       </div>
 
@@ -694,6 +889,46 @@
           <p>Energy: <span id="energy2">0.00</span> kWh</p>
           <p>Cost: <span id="cost2">$0.00</span></p>
         </div>
+        
+        <!-- Scheduling Section -->
+        <div class="schedule-section">
+          <h4><i class="fas fa-clock"></i>Schedule</h4>
+          <div class="schedule-toggle">
+            <label>
+              <input type="checkbox" id="scheduleEnabled2" onchange="toggleSchedule(2)">
+              Enable Scheduling
+            </label>
+          </div>
+          <div class="time-inputs" id="timeInputs2" style="display: none;">
+            <div class="time-group">
+              <label>Turn ON at:</label>
+              <div class="time-input-row">
+                <input type="number" id="onHour2" class="time-input" min="1" max="12" placeholder="12" value="12">
+                <span>:</span>
+                <input type="number" id="onMinute2" class="time-input" min="0" max="59" placeholder="00" value="0">
+                <select id="onAMPM2" class="ampm-select">
+                  <option value="false">AM</option>
+                  <option value="true">PM</option>
+                </select>
+              </div>
+            </div>
+            <div class="time-group">
+              <label>Turn OFF at:</label>
+              <div class="time-input-row">
+                <input type="number" id="offHour2" class="time-input" min="1" max="12" placeholder="12" value="12">
+                <span>:</span>
+                <input type="number" id="offMinute2" class="time-input" min="0" max="59" placeholder="30" value="30">
+                <select id="offAMPM2" class="ampm-select">
+                  <option value="false">AM</option>
+                  <option value="true">PM</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="schedule-status" id="scheduleStatus2">Schedule disabled</div>
+          <button class="save-schedule-btn" onclick="saveSchedule(2)">Save Schedule</button>
+        </div>
+        
         <button id="btn2">Toggle</button>
       </div>
 
@@ -708,6 +943,46 @@
           <p>Energy: <span id="energy3">0.00</span> kWh</p>
           <p>Cost: <span id="cost3">$0.00</span></p>
         </div>
+        
+        <!-- Scheduling Section -->
+        <div class="schedule-section">
+          <h4><i class="fas fa-clock"></i>Schedule</h4>
+          <div class="schedule-toggle">
+            <label>
+              <input type="checkbox" id="scheduleEnabled3" onchange="toggleSchedule(3)">
+              Enable Scheduling
+            </label>
+          </div>
+          <div class="time-inputs" id="timeInputs3" style="display: none;">
+            <div class="time-group">
+              <label>Turn ON at:</label>
+              <div class="time-input-row">
+                <input type="number" id="onHour3" class="time-input" min="1" max="12" placeholder="12" value="12">
+                <span>:</span>
+                <input type="number" id="onMinute3" class="time-input" min="0" max="59" placeholder="00" value="0">
+                <select id="onAMPM3" class="ampm-select">
+                  <option value="false">AM</option>
+                  <option value="true">PM</option>
+                </select>
+              </div>
+            </div>
+            <div class="time-group">
+              <label>Turn OFF at:</label>
+              <div class="time-input-row">
+                <input type="number" id="offHour3" class="time-input" min="1" max="12" placeholder="12" value="12">
+                <span>:</span>
+                <input type="number" id="offMinute3" class="time-input" min="0" max="59" placeholder="30" value="30">
+                <select id="offAMPM3" class="ampm-select">
+                  <option value="false">AM</option>
+                  <option value="true">PM</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="schedule-status" id="scheduleStatus3">Schedule disabled</div>
+          <button class="save-schedule-btn" onclick="saveSchedule(3)">Save Schedule</button>
+        </div>
+        
         <button id="btn3">Toggle</button>
       </div>
 
@@ -722,6 +997,46 @@
           <p>Energy: <span id="energy4">0.00</span> kWh</p>
           <p>Cost: <span id="cost4">$0.00</span></p>
         </div>
+        
+        <!-- Scheduling Section -->
+        <div class="schedule-section">
+          <h4><i class="fas fa-clock"></i>Schedule</h4>
+          <div class="schedule-toggle">
+            <label>
+              <input type="checkbox" id="scheduleEnabled4" onchange="toggleSchedule(4)">
+              Enable Scheduling
+            </label>
+          </div>
+          <div class="time-inputs" id="timeInputs4" style="display: none;">
+            <div class="time-group">
+              <label>Turn ON at:</label>
+              <div class="time-input-row">
+                <input type="number" id="onHour4" class="time-input" min="1" max="12" placeholder="12" value="12">
+                <span>:</span>
+                <input type="number" id="onMinute4" class="time-input" min="0" max="59" placeholder="00" value="0">
+                <select id="onAMPM4" class="ampm-select">
+                  <option value="false">AM</option>
+                  <option value="true">PM</option>
+                </select>
+              </div>
+            </div>
+            <div class="time-group">
+              <label>Turn OFF at:</label>
+              <div class="time-input-row">
+                <input type="number" id="offHour4" class="time-input" min="1" max="12" placeholder="12" value="12">
+                <span>:</span>
+                <input type="number" id="offMinute4" class="time-input" min="0" max="59" placeholder="30" value="30">
+                <select id="offAMPM4" class="ampm-select">
+                  <option value="false">AM</option>
+                  <option value="true">PM</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="schedule-status" id="scheduleStatus4">Schedule disabled</div>
+          <button class="save-schedule-btn" onclick="saveSchedule(4)">Save Schedule</button>
+        </div>
+        
         <button id="btn4">Toggle</button>
       </div>
     </div>
@@ -775,378 +1090,5 @@
     
     // Currency symbols and formatting
     const currencyFormats = {
-      'USD': { symbol: '$', decimal: 2, separator: '.', format: (value) => `${this.symbol}${value.toFixed(this.decimal)}` },
-      'EUR': { symbol: '€', decimal: 2, separator: ',', format: (value) => `${this.symbol}${value.toFixed(this.decimal).replace('.', this.separator)}` },
-      'LKR': { symbol: 'Rs ', decimal: 2, separator: '.', format: (value) => `${this.symbol}${value.toFixed(this.decimal)}` },
-      'GBP': { symbol: '£', decimal: 2, separator: '.', format: (value) => `${this.symbol}${value.toFixed(this.decimal)}` },
-      'JPY': { symbol: '¥', decimal: 0, separator: '.', format: (value) => `${this.symbol}${value.toFixed(this.decimal)}` },
-      'AUD': { symbol: 'A$', decimal: 2, separator: '.', format: (value) => `${this.symbol}${value.toFixed(this.decimal)}` }
-    };
-
-    let powerChart, costChart;
-    let energyData = {
-      1: { voltage: 0, current: 0, power: 0, energy: 0, cost: 0, lastUpdate: Date.now() },
-      2: { voltage: 0, current: 0, power: 0, energy: 0, cost: 0, lastUpdate: Date.now() },
-      3: { voltage: 0, current: 0, power: 0, energy: 0, cost: 0, lastUpdate: Date.now() },
-      4: { voltage: 0, current: 0, power: 0, energy: 0, cost: 0, lastUpdate: Date.now() }
-    };
-
-    const loginForm = document.getElementById("loginForm");
-    const dashboard = document.getElementById("dashboard");
-    const loginBtn = document.getElementById("loginBtn");
-    const settingsBtn = document.getElementById("settingsBtn");
-    const settingsDropdown = document.getElementById("settingsDropdown");
-    const darkModeToggle = document.getElementById("darkModeToggle");
-    const currencySelect = document.getElementById("currencySelect");
-
-    // Toggle settings dropdown
-    settingsBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      settingsDropdown.classList.toggle("show");
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener("click", () => {
-      settingsDropdown.classList.remove("show");
-    });
-
-    // Dark mode toggle
-    darkModeToggle.addEventListener("change", () => {
-      darkModeEnabled = darkModeToggle.checked;
-      document.body.classList.toggle("dark-mode", darkModeEnabled);
-      localStorage.setItem("darkMode", darkModeEnabled ? "enabled" : "disabled");
-      updateCharts();
-    });
-
-    // Currency selection
-    currencySelect.addEventListener("change", () => {
-      currentCurrency = currencySelect.value;
-      localStorage.setItem("currency", currentCurrency);
-      updateAllEnergyCalculations();
-    });
-
-    // Load saved preferences
-    function loadPreferences() {
-      if (localStorage.getItem("darkMode") === "enabled") {
-        darkModeToggle.checked = true;
-        document.body.classList.add("dark-mode");
-        darkModeEnabled = true;
-      }
-      
-      const savedCurrency = localStorage.getItem("currency");
-      if (savedCurrency && currencyFormats[savedCurrency]) {
-        currentCurrency = savedCurrency;
-        currencySelect.value = currentCurrency;
-      }
-    }
-
-    // Format currency based on selection
-    function formatCurrency(value) {
-      const format = currencyFormats[currentCurrency] || currencyFormats['USD'];
-      return format.format(value);
-    }
-
-    loginBtn.addEventListener("click", () => {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-
-      if (!email || !password) {
-        alert("Please enter email and password.");
-        return;
-      }
-
-      loginBtn.innerHTML = 'Logging in...';
-      loginBtn.disabled = true;
-
-      if(email === allowedEmail && password === allowedPassword){
-        firebase.auth().signInWithEmailAndPassword(email, password)
-          .then(userCredential => {
-            console.log("Signed in as", userCredential.user.email);
-            loginForm.style.display = "none";
-            dashboard.style.display = "block";
-            startRelayControl();
-            initializeCharts();
-          })
-          .catch(error => {
-            alert("Firebase login failed: " + error.message);
-            loginBtn.innerHTML = 'Login';
-            loginBtn.disabled = false;
-          });
-      } else {
-        alert("Invalid email or password.");
-        loginBtn.innerHTML = 'Login';
-        loginBtn.disabled = false;
-      }
-    });
-
-    function startRelayControl() {
-      const db = firebase.database();
-
-      const relays = [
-        { id: 1, path: "relay1", sensorPath: "sensors/socket1" },
-        { id: 2, path: "relay2", sensorPath: "sensors/socket2" },
-        { id: 3, path: "relay3", sensorPath: "sensors/socket3" },
-        { id: 4, path: "relay4", sensorPath: "sensors/socket4" },
-      ];
-
-      // Update energy settings
-      document.getElementById("updateSettings").addEventListener("click", () => {
-        unitPrice = parseFloat(document.getElementById("unitPrice").value) || 0.30;
-        systemVoltage = parseFloat(document.getElementById("voltage").value) || 230;
-        updateAllEnergyCalculations();
-      });
-
-      // Listen for sensor data updates
-      db.ref("/sensors").on("value", (snapshot) => {
-        const sensorData = snapshot.val();
-        
-        relays.forEach(relay => {
-          if (sensorData && sensorData[`socket${relay.id}`]) {
-            const socketData = sensorData[`socket${relay.id}`];
-            const now = Date.now();
-            const timeDiff = (now - energyData[relay.id].lastUpdate) / 3600000;
-            
-            // Update all sensor values
-            energyData[relay.id].voltage = socketData.voltage || 0;
-            energyData[relay.id].current = socketData.current || 0;
-            energyData[relay.id].power = socketData.power || 0;
-            
-            // Convert Wh to kWh for display
-            energyData[relay.id].energy = (socketData.energy || 0) / 1000;
-            energyData[relay.id].cost = energyData[relay.id].energy * unitPrice;
-            energyData[relay.id].lastUpdate = now;
-            
-            // Update UI
-            document.getElementById(`voltage${relay.id}`).textContent = energyData[relay.id].voltage.toFixed(2);
-            document.getElementById(`current${relay.id}`).textContent = energyData[relay.id].current.toFixed(2);
-            document.getElementById(`power${relay.id}`).textContent = energyData[relay.id].power.toFixed(2);
-            document.getElementById(`energy${relay.id}`).textContent = energyData[relay.id].energy.toFixed(3);
-            document.getElementById(`cost${relay.id}`).textContent = formatCurrency(energyData[relay.id].cost);
-          }
-        });
-        
-        updateCharts();
-      });
-
-      relays.forEach(relay => {
-        const statusText = document.getElementById(`status${relay.id}`);
-        const statusIndicator = document.querySelector(`#status${relay.id}`).previousElementSibling;
-        const toggleButton = document.getElementById(`btn${relay.id}`);
-        const relayRef = db.ref("/" + relay.path);
-
-        // Remove loading class initially
-        statusIndicator.classList.remove('loading');
-
-        // Relay status listener
-        relayRef.on("value", (snapshot) => {
-          const state = snapshot.val();
-          statusText.innerText = state ? "ON" : "OFF";
-          toggleButton.style.backgroundColor = state ? "var(--success-color)" : "var(--primary-color)";
-          
-          // Update status indicator
-          statusIndicator.classList.remove('on', 'off');
-          statusIndicator.classList.add(state ? 'on' : 'off');
-          if (state) {
-            statusIndicator.classList.add('pulse');
-          } else {
-            statusIndicator.classList.remove('pulse');
-          }
-        });
-
-        toggleButton.onclick = () => {
-          relayRef.get().then(snap => {
-            relayRef.set(!snap.val());
-          });
-        };
-      });
-
-      document.getElementById("allOffBtn").onclick = () => {
-        relays.forEach(relay => {
-          db.ref("/" + relay.path).set(false);
-        });
-      };
-    }
-
-    function initializeCharts() {
-      const powerCtx = document.getElementById('powerChart').getContext('2d');
-      const costCtx = document.getElementById('costChart').getContext('2d');
-      
-      const barColors = darkModeEnabled ? [
-        'rgba(58, 134, 255, 0.7)',
-        'rgba(76, 201, 240, 0.7)',
-        'rgba(255, 90, 95, 0.7)',
-        'rgba(248, 150, 30, 0.7)'
-      ] : [
-        'rgba(44, 123, 229, 0.7)',
-        'rgba(0, 217, 126, 0.7)',
-        'rgba(230, 55, 87, 0.7)',
-        'rgba(246, 195, 67, 0.7)'
-      ];
-      
-      const borderColors = darkModeEnabled ? [
-        'rgba(58, 134, 255, 1)',
-        'rgba(76, 201, 240, 1)',
-        'rgba(255, 90, 95, 1)',
-        'rgba(248, 150, 30, 1)'
-      ] : [
-        'rgba(44, 123, 229, 1)',
-        'rgba(0, 217, 126, 1)',
-        'rgba(230, 55, 87, 1)',
-        'rgba(246, 195, 67, 1)'
-      ];
-      
-      powerChart = new Chart(powerCtx, {
-        type: 'bar',
-        data: {
-          labels: ['Socket 1', 'Socket 2', 'Socket 3', 'Socket 4'],
-          datasets: [{
-            label: 'Power (W)',
-            data: [0, 0, 0, 0],
-            backgroundColor: barColors,
-            borderColor: borderColors,
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'Power (W)',
-                color: darkModeEnabled ? '#e0e1dd' : '#12263f'
-              },
-              grid: {
-                color: darkModeEnabled ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'
-              },
-              ticks: {
-                color: darkModeEnabled ? '#e0e1dd' : '#12263f'
-              }
-            },
-            x: {
-              grid: {
-                display: false
-              },
-              ticks: {
-                color: darkModeEnabled ? '#e0e1dd' : '#12263f'
-              }
-            }
-          },
-          plugins: {
-            legend: {
-              labels: {
-                color: darkModeEnabled ? '#e0e1dd' : '#12263f'
-              }
-            }
-          }
-        }
-      });
-      
-      costChart = new Chart(costCtx, {
-        type: 'bar',
-        data: {
-          labels: ['Socket 1', 'Socket 2', 'Socket 3', 'Socket 4'],
-          datasets: [{
-            label: `Cost (${currentCurrency})`,
-            data: [0, 0, 0, 0],
-            backgroundColor: barColors,
-            borderColor: borderColors,
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: `Cost (${currentCurrency})`,
-                color: darkModeEnabled ? '#e0e1dd' : '#12263f'
-              },
-              grid: {
-                color: darkModeEnabled ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'
-              },
-              ticks: {
-                color: darkModeEnabled ? '#e0e1dd' : '#12263f'
-              }
-            },
-            x: {
-              grid: {
-                display: false
-              },
-              ticks: {
-                color: darkModeEnabled ? '#e0e1dd' : '#12263f'
-              }
-            }
-          },
-          plugins: {
-            legend: {
-              labels: {
-                color: darkModeEnabled ? '#e0e1dd' : '#12263f'
-              }
-            }
-          }
-        }
-      });
-    }
-
-    function updateCharts() {
-      if (powerChart && costChart) {
-        powerChart.data.datasets[0].data = [
-          energyData[1].power,
-          energyData[2].power,
-          energyData[3].power,
-          energyData[4].power
-        ];
-        
-        costChart.data.datasets[0].data = [
-          energyData[1].cost,
-          energyData[2].cost,
-          energyData[3].cost,
-          energyData[4].cost
-        ];
-        
-        costChart.data.datasets[0].label = `Cost (${currentCurrency})`;
-        costChart.options.scales.y.title.text = `Cost (${currentCurrency})`;
-        
-        powerChart.update();
-        costChart.update();
-      }
-    }
-
-    function updateAllEnergyCalculations() {
-      const now = Date.now();
-      for (let i = 1; i <= 4; i++) {
-        energyData[i].cost = energyData[i].energy * unitPrice;
-        document.getElementById(`cost${i}`).textContent = formatCurrency(energyData[i].cost);
-      }
-      updateCharts();
-    }
-
-    document.getElementById("logoutBtn").onclick = () => {
-      firebase.auth().signOut()
-        .then(() => {
-          dashboard.style.display = "none";
-          loginForm.style.display = "block";
-          document.getElementById("email").value = "";
-          document.getElementById("password").value = "";
-        })
-        .catch(error => {
-          alert("Logout failed: " + error.message);
-        });
-    };
-
-    document.addEventListener('DOMContentLoaded', function() {
-      const inputs = document.querySelectorAll('#loginForm input');
-      inputs.forEach((input, index) => {
-        input.style.animation = `fadeInUp 0.5s ease-out ${index * 0.1}s forwards`;
-        input.style.opacity = '0';
-      });
-      
-      loadPreferences();
-    });
-  </script>
-</body>
-</html>
+      'USD': { symbol: ', decimal: 2, separator: '.', format: (value) => `${this.symbol}${value.toFixed(this.decimal)}` },
+      'EUR': { symbol: '€', decimal:
