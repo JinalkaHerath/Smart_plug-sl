@@ -27,7 +27,6 @@
       --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
-    /* Dark Mode Variables */
     .dark-mode {
       --primary-color: #3a86ff;
       --primary-hover: #2667cc;
@@ -76,7 +75,6 @@
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    /* Header with settings button */
     .header {
       display: flex;
       justify-content: space-between;
@@ -111,7 +109,6 @@
       background-color: rgba(255,255,255,0.1);
     }
 
-    /* Settings dropdown */
     .settings-dropdown {
       position: absolute;
       top: 60px;
@@ -300,83 +297,6 @@
       background-color: var(--gray-color);
     }
 
-    /* Schedule controls */
-    .schedule-control {
-      margin: 15px 0;
-      padding: 12px;
-      background-color: var(--body-bg);
-      border-radius: var(--border-radius);
-    }
-
-    .schedule-toggle {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-
-    .schedule-toggle span {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-    }
-
-    .toggle-switch.small {
-      width: 40px;
-      height: 20px;
-    }
-
-    .toggle-switch.small .toggle-slider:before {
-      height: 12px;
-      width: 12px;
-    }
-
-    .time-input {
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-    }
-
-    .time-input label {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      margin-right: 8px;
-      min-width: 50px;
-    }
-
-    .time-input input[type="time"] {
-      flex: 1;
-      padding: 6px 8px;
-      border: 1px solid var(--gray-color);
-      border-radius: var(--border-radius);
-      background-color: var(--card-bg);
-      color: var(--text-color);
-    }
-
-    .time-input select {
-      margin-left: 8px;
-      padding: 6px;
-      border: 1px solid var(--gray-color);
-      border-radius: var(--border-radius);
-      background-color: var(--card-bg);
-      color: var(--text-color);
-    }
-
-    .save-schedule {
-      width: 100%;
-      padding: 8px;
-      background-color: var(--primary-color);
-      color: white;
-      border: none;
-      border-radius: var(--border-radius);
-      cursor: pointer;
-      font-size: 0.8rem;
-      transition: var(--transition);
-    }
-
-    .save-schedule:hover {
-      background-color: var(--primary-hover);
-    }
-
     .relay-card button {
       padding: 12px 20px;
       border: none;
@@ -401,7 +321,7 @@
       transform: translateY(0);
     }
 
-    #allOffBtn, #logoutBtn {
+    #allOffBtn {
       max-width: 300px;
       width: 90%;
       padding: 14px 25px;
@@ -415,9 +335,6 @@
       color: white;
       transition: var(--transition);
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    #allOffBtn {
       background-color: var(--danger-color);
     }
 
@@ -431,91 +348,10 @@
       transform: translateY(0);
     }
 
-    #logoutBtn {
-      background-color: var(--gray-color);
-    }
-
-    #logoutBtn:hover {
-      background-color: var(--gray-hover);
-      transform: translateY(-1px);
-      box-shadow: 0 6px 8px rgba(149, 170, 201, 0.15);
-    }
-
-    #logoutBtn:active {
-      transform: translateY(0);
-    }
-
     /* Responsive layout */
     #dashboard {
-      display: none;
+      display: block;
       animation: fadeIn 0.6s;
-    }
-
-    #loginForm {
-      max-width: 400px;
-      margin: 80px auto 20px;
-      background: var(--card-bg);
-      padding: 40px 30px;
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      animation: fadeInUp 0.6s;
-      border: 1px solid rgba(0,0,0,0.03);
-    }
-
-    .dark-mode #loginForm {
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-
-    #loginForm h2 {
-      margin-top: 0;
-      margin-bottom: 25px;
-      color: var(--text-color);
-      font-weight: 600;
-    }
-
-    #loginForm input {
-      width: 100%;
-      padding: 14px 16px;
-      margin: 10px 0 20px;
-      font-size: 1rem;
-      border: 1px solid var(--gray-color);
-      border-radius: var(--border-radius);
-      box-sizing: border-box;
-      outline-offset: 2px;
-      transition: var(--transition);
-      background-color: var(--body-bg);
-      color: var(--text-color);
-    }
-
-    #loginForm input:focus {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.15);
-      background-color: var(--card-bg);
-    }
-
-    #loginForm button {
-      width: 100%;
-      background-color: var(--primary-color);
-      color: white;
-      padding: 14px;
-      font-size: 16px;
-      font-weight: 500;
-      border: none;
-      border-radius: var(--border-radius);
-      cursor: pointer;
-      transition: var(--transition);
-      margin-top: 10px;
-      box-shadow: 0 4px 6px rgba(44, 123, 229, 0.1);
-    }
-
-    #loginForm button:hover {
-      background-color: var(--primary-hover);
-      transform: translateY(-1px);
-      box-shadow: 0 6px 8px rgba(44, 123, 229, 0.15);
-    }
-
-    #loginForm button:active {
-      transform: translateY(0);
     }
 
     #dashboard .relay-container {
@@ -685,6 +521,34 @@
         box-shadow: 0 0 0 0 rgba(0, 217, 126, 0);
       }
     }
+    
+    /* Connection status */
+    .connection-status {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 8px;
+      background-color: var(--gray-color);
+    }
+    
+    .status-dot.connected {
+      background-color: var(--success-color);
+      box-shadow: 0 0 0 4px rgba(0, 217, 126, 0.2);
+    }
+    
+    .status-dot.connecting {
+      background-color: var(--warning-color);
+      animation: pulse 1.5s infinite;
+    }
   </style>
 </head>
 <body>
@@ -719,14 +583,11 @@
       </div>
     </div>
   </div>
-
-  <!-- Login form -->
-  <div id="loginForm">
-    <h2>Welcome Back</h2>
-    <input type="email" id="email" placeholder="Enter Email" required />
-    <input type="password" id="password" placeholder="Enter Password" required />
-    <button id="loginBtn">Login</button>
-  </div>  
+  
+  <div class="connection-status">
+    <span class="status-dot connecting" id="connectionDot"></span>
+    <span id="connectionStatus">Connecting to device...</span>
+  </div>
 
   <!-- Dashboard -->
   <div id="dashboard">
@@ -757,34 +618,6 @@
           <p>Energy: <span id="energy1">0.00</span> kWh</p>
           <p>Cost: <span id="cost1">$0.00</span></p>
         </div>
-        <div class="schedule-control">
-          <div class="schedule-toggle">
-            <span>Schedule</span>
-            <label class="toggle-switch small">
-              <input type="checkbox" class="schedule-enable" data-relay="1">
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-          <div class="schedule-times" style="display: none;">
-            <div class="time-input">
-              <label>On at:</label>
-              <input type="time" class="on-time" data-relay="1">
-              <select class="time-ampm">
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
-              </select>
-            </div>
-            <div class="time-input">
-              <label>Off at:</label>
-              <input type="time" class="off-time" data-relay="1">
-              <select class="time-ampm">
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
-              </select>
-            </div>
-            <button class="save-schedule" data-relay="1">Save</button>
-          </div>
-        </div>
         <button id="btn1">Toggle</button>
       </div>
 
@@ -798,34 +631,6 @@
           <p>Power: <span id="power2">0.00</span> W</p>
           <p>Energy: <span id="energy2">0.00</span> kWh</p>
           <p>Cost: <span id="cost2">$0.00</span></p>
-        </div>
-        <div class="schedule-control">
-          <div class="schedule-toggle">
-            <span>Schedule</span>
-            <label class="toggle-switch small">
-              <input type="checkbox" class="schedule-enable" data-relay="2">
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-          <div class="schedule-times" style="display: none;">
-            <div class="time-input">
-              <label>On at:</label>
-              <input type="time" class="on-time" data-relay="2">
-              <select class="time-ampm">
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
-              </select>
-            </div>
-            <div class="time-input">
-              <label>Off at:</label>
-              <input type="time" class="off-time" data-relay="2">
-              <select class="time-ampm">
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
-              </select>
-            </div>
-            <button class="save-schedule" data-relay="2">Save</button>
-          </div>
         </div>
         <button id="btn2">Toggle</button>
       </div>
@@ -841,34 +646,6 @@
           <p>Energy: <span id="energy3">0.00</span> kWh</p>
           <p>Cost: <span id="cost3">$0.00</span></p>
         </div>
-        <div class="schedule-control">
-          <div class="schedule-toggle">
-            <span>Schedule</span>
-            <label class="toggle-switch small">
-              <input type="checkbox" class="schedule-enable" data-relay="3">
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-          <div class="schedule-times" style="display: none;">
-            <div class="time-input">
-              <label>On at:</label>
-              <input type="time" class="on-time" data-relay="3">
-              <select class="time-ampm">
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
-              </select>
-            </div>
-            <div class="time-input">
-              <label>Off at:</label>
-              <input type="time" class="off-time" data-relay="3">
-              <select class="time-ampm">
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
-              </select>
-            </div>
-            <button class="save-schedule" data-relay="3">Save</button>
-          </div>
-        </div>
         <button id="btn3">Toggle</button>
       </div>
 
@@ -882,34 +659,6 @@
           <p>Power: <span id="power4">0.00</span> W</p>
           <p>Energy: <span id="energy4">0.00</span> kWh</p>
           <p>Cost: <span id="cost4">$0.00</span></p>
-        </div>
-        <div class="schedule-control">
-          <div class="schedule-toggle">
-            <span>Schedule</span>
-            <label class="toggle-switch small">
-              <input type="checkbox" class="schedule-enable" data-relay="4">
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-          <div class="schedule-times" style="display: none;">
-            <div class="time-input">
-              <label>On at:</label>
-              <input type="time" class="on-time" data-relay="4">
-              <select class="time-ampm">
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
-              </select>
-            </div>
-            <div class="time-input">
-              <label>Off at:</label>
-              <input type="time" class="off-time" data-relay="4">
-              <select class="time-ampm">
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
-              </select>
-            </div>
-            <button class="save-schedule" data-relay="4">Save</button>
-          </div>
         </div>
         <button id="btn4">Toggle</button>
       </div>
@@ -926,7 +675,6 @@
     </div>
 
     <button id="allOffBtn">All OFF</button>
-    <button id="logoutBtn">Logout</button>
   </div>
 
   <footer>
@@ -936,7 +684,6 @@
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
 
   <script>
     // Firebase config
@@ -950,11 +697,9 @@
       appId: "1:751077979174:web:5763486777df938f7062e7"
     };
 
+    // Initialize Firebase without authentication
     firebase.initializeApp(firebaseConfig);
-
-    // Predefined login credentials
-    const allowedEmail = "jimalkaperera@gmail.com";
-    const allowedPassword = "Jinalka@1999";
+    const db = firebase.database();
 
     // Energy monitoring variables
     let unitPrice = 0.30;
@@ -980,13 +725,12 @@
       4: { voltage: 0, current: 0, power: 0, energy: 0, cost: 0, lastUpdate: Date.now() }
     };
 
-    const loginForm = document.getElementById("loginForm");
-    const dashboard = document.getElementById("dashboard");
-    const loginBtn = document.getElementById("loginBtn");
     const settingsBtn = document.getElementById("settingsBtn");
     const settingsDropdown = document.getElementById("settingsDropdown");
     const darkModeToggle = document.getElementById("darkModeToggle");
     const currencySelect = document.getElementById("currencySelect");
+    const connectionDot = document.getElementById("connectionDot");
+    const connectionStatus = document.getElementById("connectionStatus");
 
     // Toggle settings dropdown
     settingsBtn.addEventListener("click", (e) => {
@@ -1035,261 +779,7 @@
       return format.format(value);
     }
 
-    loginBtn.addEventListener("click", () => {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-
-      if (!email || !password) {
-        alert("Please enter email and password.");
-        return;
-      }
-
-      loginBtn.innerHTML = 'Logging in...';
-      loginBtn.disabled = true;
-
-      if(email === allowedEmail && password === allowedPassword){
-        firebase.auth().signInWithEmailAndPassword(email, password)
-          .then(userCredential => {
-            console.log("Signed in as", userCredential.user.email);
-            loginForm.style.display = "none";
-            dashboard.style.display = "block";
-            startRelayControl();
-            initializeCharts();
-          })
-          .catch(error => {
-            alert("Firebase login failed: " + error.message);
-            loginBtn.innerHTML = 'Login';
-            loginBtn.disabled = false;
-          });
-      } else {
-        alert("Invalid email or password.");
-        loginBtn.innerHTML = 'Login';
-        loginBtn.disabled = false;
-      }
-    });
-
-    function startRelayControl() {
-      const db = firebase.database();
-
-      const relays = [
-        { id: 1, path: "relay1", sensorPath: "sensors/socket1", schedule: { enabled: false, onTime: null, offTime: null } },
-        { id: 2, path: "relay2", sensorPath: "sensors/socket2", schedule: { enabled: false, onTime: null, offTime: null } },
-        { id: 3, path: "relay3", sensorPath: "sensors/socket3", schedule: { enabled: false, onTime: null, offTime: null } },
-        { id: 4, path: "relay4", sensorPath: "sensors/socket4", schedule: { enabled: false, onTime: null, offTime: null } },
-      ];
-
-      // Update energy settings
-      document.getElementById("updateSettings").addEventListener("click", () => {
-        unitPrice = parseFloat(document.getElementById("unitPrice").value) || 0.30;
-        systemVoltage = parseFloat(document.getElementById("voltage").value) || 230;
-        updateAllEnergyCalculations();
-      });
-
-      // Listen for sensor data updates
-      db.ref("/sensors").on("value", (snapshot) => {
-        const sensorData = snapshot.val();
-        
-        relays.forEach(relay => {
-          if (sensorData && sensorData[`socket${relay.id}`]) {
-            const socketData = sensorData[`socket${relay.id}`];
-            const now = Date.now();
-            const timeDiff = (now - energyData[relay.id].lastUpdate) / 3600000;
-            
-            // Update all sensor values
-            energyData[relay.id].voltage = socketData.voltage || 0;
-            energyData[relay.id].current = socketData.current || 0;
-            energyData[relay.id].power = socketData.power || 0;
-            
-            // Convert Wh to kWh for display
-            energyData[relay.id].energy = (socketData.energy || 0) / 1000;
-            energyData[relay.id].cost = energyData[relay.id].energy * unitPrice;
-            energyData[relay.id].lastUpdate = now;
-            
-            // Update UI
-            document.getElementById(`voltage${relay.id}`).textContent = energyData[relay.id].voltage.toFixed(2);
-            document.getElementById(`current${relay.id}`).textContent = energyData[relay.id].current.toFixed(2);
-            document.getElementById(`power${relay.id}`).textContent = energyData[relay.id].power.toFixed(2);
-            document.getElementById(`energy${relay.id}`).textContent = energyData[relay.id].energy.toFixed(3);
-            document.getElementById(`cost${relay.id}`).textContent = formatCurrency(energyData[relay.id].cost);
-          }
-        });
-        
-        updateCharts();
-      });
-
-      relays.forEach(relay => {
-        const statusText = document.getElementById(`status${relay.id}`);
-        const statusIndicator = document.querySelector(`#status${relay.id}`).previousElementSibling;
-        const toggleButton = document.getElementById(`btn${relay.id}`);
-        const relayRef = db.ref("/" + relay.path);
-
-        // Remove loading class initially
-        statusIndicator.classList.remove('loading');
-
-        // Relay status listener
-        relayRef.on("value", (snapshot) => {
-          const state = snapshot.val();
-          statusText.innerText = state ? "ON" : "OFF";
-          toggleButton.style.backgroundColor = state ? "var(--success-color)" : "var(--primary-color)";
-          
-          // Update status indicator
-          statusIndicator.classList.remove('on', 'off');
-          statusIndicator.classList.add(state ? 'on' : 'off');
-          if (state) {
-            statusIndicator.classList.add('pulse');
-          } else {
-            statusIndicator.classList.remove('pulse');
-          }
-        });
-
-        toggleButton.onclick = () => {
-          relayRef.get().then(snap => {
-            relayRef.set(!snap.val());
-          });
-        };
-      });
-
-      document.getElementById("allOffBtn").onclick = () => {
-        relays.forEach(relay => {
-          db.ref("/" + relay.path).set(false);
-        });
-      };
-
-      // Initialize scheduling functionality
-      initializeScheduling();
-    }
-
-    function initializeScheduling() {
-      const relays = [
-        { id: 1, path: "relay1", sensorPath: "sensors/socket1", schedule: { enabled: false, onTime: null, offTime: null } },
-        { id: 2, path: "relay2", sensorPath: "sensors/socket2", schedule: { enabled: false, onTime: null, offTime: null } },
-        { id: 3, path: "relay3", sensorPath: "sensors/socket3", schedule: { enabled: false, onTime: null, offTime: null } },
-        { id: 4, path: "relay4", sensorPath: "sensors/socket4", schedule: { enabled: false, onTime: null, offTime: null } },
-      ];
-
-      relays.forEach(relay => {
-        const enableCheckbox = document.querySelector(`.schedule-enable[data-relay="${relay.id}"]`);
-        const scheduleTimes = document.querySelector(`.schedule-enable[data-relay="${relay.id}"]`).closest('.schedule-toggle').nextElementSibling;
-        
-        enableCheckbox.addEventListener('change', function() {
-          relay.schedule.enabled = this.checked;
-          scheduleTimes.style.display = this.checked ? 'block' : 'none';
-          
-          if (!this.checked) {
-            clearSchedule(relay.id);
-          }
-        });
-        
-        document.querySelector(`.save-schedule[data-relay="${relay.id}"]`).addEventListener('click', function() {
-          saveSchedule(relay.id);
-        });
-        
-        // Load saved schedule from localStorage
-        const savedSchedule = localStorage.getItem(`relaySchedule_${relay.id}`);
-        if (savedSchedule) {
-          const schedule = JSON.parse(savedSchedule);
-          relay.schedule = schedule;
-          enableCheckbox.checked = schedule.enabled;
-          scheduleTimes.style.display = schedule.enabled ? 'block' : 'none';
-          
-          if (schedule.enabled) {
-            const onTimeInput = document.querySelector(`.on-time[data-relay="${relay.id}"]`);
-            const offTimeInput = document.querySelector(`.off-time[data-relay="${relay.id}"]`);
-            const onAmPm = onTimeInput.nextElementSibling;
-            const offAmPm = offTimeInput.nextElementSibling;
-            
-            if (schedule.onTime) {
-              const [hours, minutes] = schedule.onTime.split(':');
-              onTimeInput.value = `${hours.padStart(2, '0')}:${minutes}`;
-              onAmPm.value = hours >= 12 ? 'PM' : 'AM';
-            }
-            
-            if (schedule.offTime) {
-              const [hours, minutes] = schedule.offTime.split(':');
-              offTimeInput.value = `${hours.padStart(2, '0')}:${minutes}`;
-              offAmPm.value = hours >= 12 ? 'PM' : 'AM';
-            }
-          }
-        }
-      });
-      
-      // Check schedules every minute
-      setInterval(checkSchedules, 60000);
-    }
-
-    function saveSchedule(relayId) {
-      const relay = relays.find(r => r.id === relayId);
-      if (!relay) return;
-      
-      const onTimeInput = document.querySelector(`.on-time[data-relay="${relayId}"]`);
-      const offTimeInput = document.querySelector(`.off-time[data-relay="${relayId}"]`);
-      const onAmPm = onTimeInput.nextElementSibling;
-      const offAmPm = offTimeInput.nextElementSibling;
-      
-      // Convert to 24-hour format
-      const onTime24 = convertTo24Hour(onTimeInput.value, onAmPm.value);
-      const offTime24 = convertTo24Hour(offTimeInput.value, offAmPm.value);
-      
-      relay.schedule.onTime = onTime24;
-      relay.schedule.offTime = offTime24;
-      
-      localStorage.setItem(`relaySchedule_${relayId}`, JSON.stringify(relay.schedule));
-      alert(`Schedule for Socket ${relayId} saved successfully!`);
-    }
-
-    function clearSchedule(relayId) {
-      const relay = relays.find(r => r.id === relayId);
-      if (!relay) return;
-      
-      relay.schedule.onTime = null;
-      relay.schedule.offTime = null;
-      localStorage.removeItem(`relaySchedule_${relayId}`);
-    }
-
-    function convertTo24Hour(time, ampm) {
-      if (!time) return null;
-      
-      let [hours, minutes] = time.split(':');
-      hours = parseInt(hours);
-      
-      if (ampm === 'PM' && hours < 12) {
-        hours += 12;
-      } else if (ampm === 'AM' && hours === 12) {
-        hours = 0;
-      }
-      
-      return `${hours.toString().padStart(2, '0')}:${minutes}`;
-    }
-
-    function checkSchedules() {
-      const now = new Date();
-      const currentHours = now.getHours().toString().padStart(2, '0');
-      const currentMinutes = now.getMinutes().toString().padStart(2, '0');
-      const currentTime = `${currentHours}:${currentMinutes}`;
-      
-      const relays = [
-        { id: 1, path: "relay1", schedule: { enabled: false, onTime: null, offTime: null } },
-        { id: 2, path: "relay2", schedule: { enabled: false, onTime: null, offTime: null } },
-        { id: 3, path: "relay3", schedule: { enabled: false, onTime: null, offTime: null } },
-        { id: 4, path: "relay4", schedule: { enabled: false, onTime: null, offTime: null } },
-      ];
-
-      relays.forEach(relay => {
-        if (!relay.schedule.enabled) return;
-        
-        const db = firebase.database();
-        const relayRef = db.ref("/" + relay.path);
-        
-        if (relay.schedule.onTime && currentTime === relay.schedule.onTime) {
-          relayRef.set(true);
-        }
-        
-        if (relay.schedule.offTime && currentTime === relay.schedule.offTime) {
-          relayRef.set(false);
-        }
-      });
-    }
-
+    // Initialize charts
     function initializeCharts() {
       const powerCtx = document.getElementById('powerChart').getContext('2d');
       const costCtx = document.getElementById('costChart').getContext('2d');
@@ -1448,27 +938,116 @@
       updateCharts();
     }
 
-    document.getElementById("logoutBtn").onclick = () => {
-      firebase.auth().signOut()
-        .then(() => {
-          dashboard.style.display = "none";
-          loginForm.style.display = "block";
-          document.getElementById("email").value = "";
-          document.getElementById("password").value = "";
-        })
-        .catch(error => {
-          alert("Logout failed: " + error.message);
-        });
-    };
+    // Start relay control
+    function startRelayControl() {
+      const relays = [
+        { id: 1, path: "relay1", sensorPath: "sensors/socket1" },
+        { id: 2, path: "relay2", sensorPath: "sensors/socket2" },
+        { id: 3, path: "relay3", sensorPath: "sensors/socket3" },
+        { id: 4, path: "relay4", sensorPath: "sensors/socket4" },
+      ];
 
-    document.addEventListener('DOMContentLoaded', function() {
-      const inputs = document.querySelectorAll('#loginForm input');
-      inputs.forEach((input, index) => {
-        input.style.animation = `fadeInUp 0.5s ease-out ${index * 0.1}s forwards`;
-        input.style.opacity = '0';
+      // Update energy settings
+      document.getElementById("updateSettings").addEventListener("click", () => {
+        unitPrice = parseFloat(document.getElementById("unitPrice").value) || 0.30;
+        systemVoltage = parseFloat(document.getElementById("voltage").value) || 230;
+        updateAllEnergyCalculations();
       });
-      
+
+      // Listen for sensor data updates
+      db.ref("/sensors").on("value", (snapshot) => {
+        const sensorData = snapshot.val();
+        
+        // Update connection status
+        if (sensorData) {
+          connectionDot.className = "status-dot connected";
+          connectionStatus.textContent = "Connected to device";
+        }
+        
+        relays.forEach(relay => {
+          if (sensorData && sensorData[`socket${relay.id}`]) {
+            const socketData = sensorData[`socket${relay.id}`];
+            const now = Date.now();
+            const timeDiff = (now - energyData[relay.id].lastUpdate) / 3600000;
+            
+            // Update all sensor values
+            energyData[relay.id].voltage = socketData.voltage || 0;
+            energyData[relay.id].current = socketData.current || 0;
+            energyData[relay.id].power = socketData.power || 0;
+            
+            // Convert Wh to kWh for display
+            energyData[relay.id].energy = (socketData.energy || 0) / 1000;
+            energyData[relay.id].cost = energyData[relay.id].energy * unitPrice;
+            energyData[relay.id].lastUpdate = now;
+            
+            // Update UI
+            document.getElementById(`voltage${relay.id}`).textContent = energyData[relay.id].voltage.toFixed(2);
+            document.getElementById(`current${relay.id}`).textContent = energyData[relay.id].current.toFixed(2);
+            document.getElementById(`power${relay.id}`).textContent = energyData[relay.id].power.toFixed(2);
+            document.getElementById(`energy${relay.id}`).textContent = energyData[relay.id].energy.toFixed(3);
+            document.getElementById(`cost${relay.id}`).textContent = formatCurrency(energyData[relay.id].cost);
+          }
+        });
+        
+        updateCharts();
+      }, (error) => {
+        console.error("Firebase error:", error);
+        connectionDot.className = "status-dot";
+        connectionStatus.textContent = "Connection error - retrying...";
+      });
+
+      relays.forEach(relay => {
+        const statusText = document.getElementById(`status${relay.id}`);
+        const statusIndicator = document.querySelector(`#status${relay.id}`).previousElementSibling;
+        const toggleButton = document.getElementById(`btn${relay.id}`);
+        const relayRef = db.ref("/" + relay.path);
+
+        // Remove loading class initially
+        statusIndicator.classList.remove('loading');
+
+        // Relay status listener
+        relayRef.on("value", (snapshot) => {
+          const state = snapshot.val();
+          statusText.innerText = state ? "ON" : "OFF";
+          toggleButton.style.backgroundColor = state ? "var(--success-color)" : "var(--primary-color)";
+          
+          // Update status indicator
+          statusIndicator.classList.remove('on', 'off');
+          statusIndicator.classList.add(state ? 'on' : 'off');
+          if (state) {
+            statusIndicator.classList.add('pulse');
+          } else {
+            statusIndicator.classList.remove('pulse');
+          }
+        });
+
+        toggleButton.onclick = () => {
+          relayRef.get().then(snap => {
+            relayRef.set(!snap.val());
+          });
+        };
+      });
+
+      document.getElementById("allOffBtn").onclick = () => {
+        relays.forEach(relay => {
+          db.ref("/" + relay.path).set(false);
+        });
+      };
+    }
+
+    // Initialize the dashboard
+    document.addEventListener('DOMContentLoaded', function() {
       loadPreferences();
+      initializeCharts();
+      startRelayControl();
+      
+      // Simulate initial connection animation
+      setTimeout(() => {
+        if (connectionDot.className.includes("connecting")) {
+          connectionDot.className = "status-dot connected";
+          connectionStatus.textContent = "Connected to device";
+        }
+      }, 2000);
     });
   </script>
 </body>
